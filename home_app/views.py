@@ -103,9 +103,11 @@ def index(request):
         price = request.POST.get('price')
         qty = request.POST.get('qty')
         google_id = request.POST.get('google_id')
-        try:#objects.get  throws error if not found 
-            book_ob = Book.objects.get(google_id=google_id )
+        #print(google_id,type(google_id))
+        try: #objects.get  throws error if not found 
+            book_ob = Book.objects.get(google_id=str(google_id) )
             book_ob.qty = book_ob.qty + 1
+            
         except:    
             book_ob = Book(name=name,author_name=author_name,qty=qty, desc=desc,price=price,date=datetime.today(),google_id=google_id)
         book_ob.save()
