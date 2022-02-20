@@ -86,7 +86,7 @@ def findBooks(request):
                
         except Exception as err:
             print("connection failed",err)
-        
+        book_ids = set(book_ids)
         return render(request,'findBooks_in_inventory.html',{'all_books':book_ids})
     return redirect("/") # to go to home
 def index(request):
