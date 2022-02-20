@@ -1,12 +1,12 @@
 python -m pip install -U pip --user 
 pip install virtualenv
 virtualenv env       
-
+.\env\Scripts\activate.ps1
 
 
 pip install gunicorn # web server used for heroku 
-# django run server 
-python manage.py runserver 
+# django run server
+python manage.py runserver
 
 pip install gunicorn
 pip install django_heroku
