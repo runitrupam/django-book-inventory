@@ -1,3 +1,11 @@
+## Requirements 
+- [x] Django , Heroku , Python , HTML CSS
+- [X] DB = SQLITE
+- [X] A book is unique based on the google id(volume id obtained using the google API) used in the table BOOKS .
+- [X] On adding same book again increase the Quantity 
+	 
+
+
 # Book Browse
 
 A Django app which uses the Google Books API to allow a to user search for and see information about books and store the books in your inventoy.

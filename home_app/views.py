@@ -9,19 +9,24 @@ def addBook(request,id):
     if request.method == 'POST': 
         try:
             #GET https://www.googleapis.com/books/v1/volumes/zyTCAlFPjgYC
+            try:#objects.get  throws error if not found 
+                book_ob = Book.objects.get(google_id=id )
+                book_ob.qty = book_ob.qty + 1
+            except:
+                
+                url = "https://www.googleapis.com/books/v1/volumes/"+str(id)
+                
+                response = requests.get(url).json()
+                name = response["volumeInfo"]["title"]
+                author_name = response["volumeInfo"]["authors"][0]
+                desc = response["volumeInfo"]["description"]
+                publish_date = response["volumeInfo"]["publishedDate"]
+                price = 100
+                qty = 1
+                google_id = id
+                
+                book_ob = Book(name=name,author_name=author_name,qty=qty, desc=desc,price=price,date=publish_date,google_id = google_id)
             
-            url = "https://www.googleapis.com/books/v1/volumes/"+str(id)
-            
-            response = requests.get(url).json()
-            name = response["volumeInfo"]["title"]
-            author_name = response["volumeInfo"]["authors"][0]
-            desc = response["volumeInfo"]["description"]
-            publish_date = response["volumeInfo"]["publishedDate"]
-            price = 100
-            qty = 1
-            google_id = id
-            
-            book_ob = Book(name=name,author_name=author_name,qty=qty, desc=desc,price=price,date=publish_date,google_id = google_id)
             book_ob.save()
             messages.success(request,"Your details are saved")
             
@@ -62,6 +67,7 @@ def list_of_public_books(request):
             print("connection failed",err)        
         return render(request,'list_of_public_books.html',{'all_books':book_ids})
     return redirect("/") # to go to home
+
 # find books in my library
 # called from index.html search in inventory search button
 def findBooks(request):
@@ -97,7 +103,11 @@ def index(request):
         price = request.POST.get('price')
         qty = request.POST.get('qty')
         google_id = request.POST.get('google_id')
-        book_ob = Book(name=name,author_name=author_name,qty=qty, desc=desc,price=price,date=datetime.today(),google_id=google_id)
+        try:#objects.get  throws error if not found 
+            book_ob = Book.objects.get(google_id=google_id )
+            book_ob.qty = book_ob.qty + 1
+        except:    
+            book_ob = Book(name=name,author_name=author_name,qty=qty, desc=desc,price=price,date=datetime.today(),google_id=google_id)
         book_ob.save()
         messages.success(request,"Your details are saved")
     messages.success(request,"Your index page")
