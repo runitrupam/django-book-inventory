@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% block body %}
+
+
+<div class="container my-3">
+    <h2>Update your Book </h2>
+    <form action="/update/{{book.id}}" method="POST">
+        
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="Book_Name">Your book Name: </label>
+                <input id="name" type="text" name="name" value="{{ book.name }}">
+               
+            </div>
+            <div class="mb-3">
+                <label for="google_id">Google Id : </label>
+                <input id="google_id" type="text" name="google_id" value="{{ book.google_id }}">
+               
+            </div>
+
+            
+            <div class="mb-3">
+                <label for="author_name">Author Name : </label>
+                <input id="author_name" type="text" name="author_name" value="{{ book.author_name }}">
+               
+            </div>
+            <div class="mb-3">
+                <label for="desc">Description : </label>
+                <input id="desc" type="text" name="desc" value="{{ book.desc }}">
+               
+            </div>
+          
+            <div class="mb-3">
+                <label for="price">Price: </label>
+                <input id="price" type="text" name="price" value="{{ book.price }}">
+               
+            </div>
+            <div class="mb-3">
+                <label for="qty">Quantity: </label>
+                <input id="qty" type="text" name="qty" value="{{ book.qty }}">
+               
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+    crossorigin="anonymous"></script>
+
+{% endblock body %}

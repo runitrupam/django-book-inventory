@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+{% block body %}
+
+
+<div class="container my-3">
+    <h2>Add a New Book</h2>
+    <form action="/" method="POST">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="Book_Name" class="form-label">Book Name</label>
+            <input type="text" class="form-control" name='name' id="Book_Name" aria-describedby="emailHelp">
+
+        </div>
+        <div class="mb-3">
+            <label for="Google_id" class="form-label">Google Id</label>
+            <input type="text" class="form-control" name='google_id' id="Google_id" aria-describedby="emailHelp">
+
+        </div>
+        <div class="mb-3">
+            <label for="Author_Name" class="form-label">Author Name</label>
+            <input type="text" class="form-control" name='author_name' id="Author_Name" aria-describedby="emailHelp">
+        </div>
+        <div class="mb-3">
+            <label for="Description" class="form-label">Description</label>
+            <input type="text" class="form-control" name='desc' id="Description" aria-describedby="emailHelp">
+        </div>
+        <div class="mb-3">
+            <label for="Price" class="form-label">Price</label>
+            <input type="text" class="form-control" name='price' id="Price" aria-describedby="emailHelp">
+        </div>
+        <div class="mb-3">
+            <label for="Quantity" class="form-label">Quantity</label>
+            <input type="text" class="form-control" value=1   name='qty' id="qty">
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+
+</div>
+<div class="container my-3">
+    <h2> This is my Book's list </h2>
+
+
+    {% if all_books|length == 0 %}
+    <div class="alert alert-dark" role="alert">
+        No Books found. Add your first Book now!
+    </div>
+    {% else %}
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">S no.</th>
+                <th scope="col">Google Id</th>
+                <th scope="col">Book Name</th>
+                <th scope="col">Author</th>
+                <th scope="col">Description</th>
+                <th scope="col">Price</th>
+                <th scope="col">Quantity</th>
+                <th scope="col">Creation Time</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for book in all_books %}
+            <tr>
+                <th scope="row">{{ forloop.counter }}</th>
+                <td>{{book.google_id}}</td>
+                <td>{{book.name}}</td>
+                
+                <td>{{book.author_name}}</td>
+                <td>{{book.desc}}</td>
+                <td>{{book.price}}</td>
+                <td>{{book.qty}}</td>
+                <td>{{book.date}}</td>
+                 <td>
+                     <a href="/update/{{book.id}}" type="button"
+                        class="btn btn-outline-dark btn-sm mx-1">Update Book</button>
+                    <a href="/delete/{{book.id}}" method="DELETE" type="button" class="btn btn-outline-info mx -2">Delete Book </button>
+                </td>
+
+
+
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
+
+
+
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+    crossorigin="anonymous"></script>
+
+{% endblock body %}
