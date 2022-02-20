@@ -1,6 +1,6 @@
 # Book Browse
 
-A Django app which uses the Google Books API to allow a to user search for and see information about books.
+A Django app which uses the Google Books API to allow a to user search for and see information about books and store the books in your inventoy.
 
 
 ## Running locally
@@ -17,31 +17,44 @@ To install:
 
 To run locally:
 
-  ``` sh
-  > python3 manage.py runserver
-  ```
+``` 
+> python3 manage.py runserver
+```
+
+## BEFORE USING THE GOOGLE API:
+	- [ ] read here - https://developers.google.com/books/docs/v1/using
+	- [ ] create google book api key - https://console.developers.google.com/home
+
 
 ## Features Added 
-- [ ] Home page ; shows search bar to find books , Also shows all the books available .
+- [x] Home page ; shows search bar to find books , Also shows all the books available .
 	  GET : https://book-inventory-library.herokuapp.com/
 
-- [ ] Search by title , gives 1st 40 latest results
+- [x] Search by title # gives 1st 40 latest results
 		GET : https://book-inventory-library.herokuapp.com/listOfPublicBooks/?search_text=Eternals
-		--> Add the books you want
-		POST : addBook/<str:GOOGLE_id> 
-- [ ] Search by title in library which matches only if book.google_id is same as the google_id of book 
-		Problem : supose the search fetches me only 50 books , and the book I am searching for is not present .
+		url = "https://www.googleapis.com/books/v1/volumes?q=intitle:{}&orderBy=newest&startIndex=0&maxResults=40&key={}".format(search_text,key)
+           	response = requests.get(url).json()
+		
+```
+Add the books you want
+POST : addBook/<str:GOOGLE_id> 
+url = https://www.googleapis.com/books/v1/volumes/zyTCAlFPjgYC
+response = requests.get(url).json()](url)
+```
+- [x] Search by title in library which matches only if book.google_id is same as the google_id of book 
+		
 		POST: https://book-inventory-library.herokuapp.com/findBooks/    CAN BE CHANGED TO GET 
-_ [ ] Manually add a book to your inventory 	
+- [x]  Manually add a book to your inventory 	
 			post : localhost:8000/
-_ [ ] Update a book of your inventory 	(like name , description ,quantity available , author name )	
+- [x]  Update a book of your inventory 	(like name , description ,quantity available , author name )	
 		GET : https://book-inventory-library.herokuapp.com/update/2
 		POST :https://book-inventory-library.herokuapp.com/update/2
-_ [ ] Delete a book from your inventory 		
+- [x]  Delete a book from your inventory 		
 		GET:  /delete/<int:id>    html doesn't allow DELETE method 
 
 ## Features I'd like to add
 - [ ] get a list of 1000 books 
+- [ ] Problem : Now  supose the search fetches me only 40 books , and the book I am searching for is not present that is an issue , or if not found in inventory.
 - [ ] Search by author
 - [ ] Search by genre
 - [ ] Filter / sort functionality
