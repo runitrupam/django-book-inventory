@@ -1,7 +1,7 @@
 from django.db import models
 # the PK used is the auto increment id , django adds it by default .
 class Book(models.Model):
-    google_id = models.CharField(max_length=15, default = 0)
+    google_id = models.CharField(max_length=15,unique=True , default = 0)
     name = models.CharField(max_length=122)
     
     author_name = models.CharField(max_length=122)
